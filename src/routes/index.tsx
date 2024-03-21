@@ -1,6 +1,10 @@
 import { component$ } from "@builder.io/qwik";
 import { type DocumentHead, Link } from "@builder.io/qwik-city";
 
+import '@fontsource/nothing-you-could-do';
+import '@fontsource/open-sans';
+import '@fontsource/open-sans/700.css';
+
 export default component$(() => {
   return (
     <>

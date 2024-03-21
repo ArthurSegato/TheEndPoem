@@ -44,5 +44,9 @@
     "undici": "*",
     "vite": "^5.1.4",
     "vite-tsconfig-paths": "^4.2.1"
+  },
+  "dependencies": {
+    "@fontsource/nothing-you-could-do": "^5.0.18",
+    "@fontsource/open-sans": "^5.0.27"
   }
 }
