@@ -1,26 +1,41 @@
-# Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
-.vscode
-dist
+# Build
+/dist
+/lib
+/lib-types
+/server
 
-# Node dependencies
+# Development
 node_modules
+*.local
+
+# Cache
+.cache
+.mf
+.rollup.cache
+tsconfig.tsbuildinfo
 
 # Logs
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Misc
-.DS_Store
-.fleet
+# Editor
+.vscode/*
+!.vscode/launch.json
+!.vscode/*.code-snippets
+
 .idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Local env files
-.env
-.env.*
-!.env.example
-.vercel
+# Yarn
+.yarn/*
+!.yarn/releases

@@ -1,156 +1,65 @@
-[![Website](.github/assets/banner.svg)](https://www.theendpoem.com)
-[![Uptime](https://img.shields.io/website?url=https%3A%2F%2Fwww.theendpoem.com)](https://img.shields.io/website?url=https%3A%2F%2Fwww.theendpoem.com)
-[![HSTS Status](https://img.shields.io/hsts/preload/theendpoem.com)](https://img.shields.io/hsts/preload/theendpoem.com)
-[![Mozilla HTTP Observatory](https://img.shields.io/mozilla-observatory/grade/www.theendpoem.com?publish)](https://img.shields.io/mozilla-observatory/grade/www.theendpoem.com?publish)
-[![Vercel Preview Deployment](https://github.com/ArthurSegato/TheEndPoem/actions/workflows/workflow.yml/badge.svg)](https://github.com/ArthurSegato/TheEndPoem/actions/workflows/workflow.yml)
-[![Donate on Stripe](https://img.shields.io/badge/Donate-Stripe-1D24CA)](https://donate.stripe.com/9AQbMl1Pt5DV4i4288)
+# Qwik City App ⚡️
 
-The End Poem is a freehand poem written by musician Julian Gough that appears when the player finishes minecraft, before the credits. It has been in the public domain, under the CC0 1.0 Universal (CC0 1.0) Public Domain Dedication, since 2022.
+- [Qwik Docs](https://qwik.builder.io/)
+- [Discord](https://qwik.builder.io/chat)
+- [Qwik GitHub](https://github.com/BuilderIO/qwik)
+- [@QwikDev](https://twitter.com/QwikDev)
+- [Vite](https://vitejs.dev/)
 
-## Getting Started
+---
 
-These instructions will give you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on deploying the project on a live system.
+## Project Structure
 
-### Prerequisites
+This project is using Qwik with [QwikCity](https://qwik.builder.io/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
 
-Requirements for the software and other tools to build, test and push.
+Inside your project, you'll see the following directory structure:
 
-- [Bun v1.0.26](https://bun.sh/) or above
-
-Environment variables required to run this project:
-
-```Properties
-WEBHOOK_DISCORD=""
+```
+├── public/
+│   └── ...
+└── src/
+    ├── components/
+    │   └── ...
+    └── routes/
+        └── ...
 ```
 
-### Setup
+- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.builder.io/qwikcity/routing/overview/) for more info.
 
-Make sure to install the dependencies:
+- `src/components`: Recommended directory for components.
 
-```bash
-# npm
-npm install
+- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
 
-# pnpm
-pnpm install
+## Add Integrations and deployment
 
-# yarn
-yarn install
+Use the `bun qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.builder.io/qwikcity/guides/static-site-generation/).
 
-# bun
-bun install
+```shell
+bun qwik add # or `bun qwik add`
 ```
 
-### Development
+## Development
 
-Start the development server on `http://localhost:3000`:
+Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun dev
+```shell
+npm start # or `bun start`
 ```
 
-### Production
+> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
 
-Build the application for production:
+## Preview
 
-```bash
-# npm
-npm run build
+The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
 
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```shell
+bun preview # or `bun preview`
 ```
 
-Locally preview production build:
+## Production
 
-```bash
-# npm
-npm run preview
+The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```shell
+bun build # or `bun build`
 ```
-
-## Deployment
-
-This project is automatically deployed on the Vercel Edge network. However, if it is necessary to deploy it in another environment, adjust or completely remove, the Nitro preset configuration on `nuxt.config.ts`, based on the deployment environment you intend to use.
-
-```Javascript
-nitro: {
-  /* Preset for vercel */
-  preset: "vercel-edge",
-},
-```
-
-Refer to the [deployment page](https://nuxt.com/docs/getting-started/deployment) in the Nuxt 3 documentation for guidance.
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [Semantic Versioning](https://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ArthurSegato/Portfolio/tags).
-
-## Authors
-
-- **Julian Gough** - Author of the End Poem - [juliangough.com](https://www.juliangough.com/)
-- **Arthur Segato** - Developed the website theendpoem.com - [ArthurSegato](https://github.com/ArthurSegato)
-
-See also the list of [contributors](https://github.com/ArthurSegato/TheEndPoem/graphs/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the [MIT](LICENSE) License - see the [LICENSE.md](LICENSE) file for details.
-
-## Acknowledgments
-
-### External Assets
-
-Below is a list of all the external assets used in the development of this website with their respective licenses.
-
-- [BootStrapp Icons](https://icons.getbootstrap.com) ([MIT](https://github.com/twbs/icons/blob/main/LICENSE.md))
-- [Animista](https://animista.net) ([FreeBSD](https://animista.net/license))
-- [Nothing You Could Do](https://fonts.google.com/specimen/Nothing+You+Could+Do) ([Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL))
-- [Open Sans](https://fonts.google.com/specimen/Open+Sans) ([Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL))
-- [Menu Button](https://codepen.io/himalayasingh/pen/KOdJPM) (?)
-
-### Data protection legislations (GDPR, LGPD and others)
-
-By acessing theendpoem.com, there are two distinct occasions where user data is collected. In the first instance, technical data is gathered anonymously (as shown below) by [Vercel Web Analytics](https://vercel.com/docs/analytics) via a JS script, which can be easily blocked by any ad-blocking extension.
-
-![Vercel Web Analytics Dashboard](.github/assets/vercel.jpg "Vercel Web Analytics Dashboard")
-
-The second instance happens when the user inputs any text into the name field and submit it. In this case, the content entered into the name field is directly sent to a text channel on my personal Discord server, **accessible only by me** (as illustrated below), via a webhook.
-
-![My Discord private server](.github/assets/discord.jpg "My Discord private server")
-
-**If the user wishes to delete their name, they can simply reach out to me through any available channel on my GitHub profile or [personal website](https://www.arthursegato.dev/)**.
-
-### Special Thanks
-
-To all those who generously donated and supported me in sustaining this project:
-
-- [Laura Newman](https://lauranewman.com/pages/index.php)
