@@ -47,6 +47,8 @@
   },
   "dependencies": {
     "@fontsource/nothing-you-could-do": "^5.0.18",
-    "@fontsource/open-sans": "^5.0.27"
+    "@fontsource/open-sans": "^5.0.27",
+    "@modular-forms/qwik": "^0.23.1",
+    "valibot": "^0.30.0"
   }
 }

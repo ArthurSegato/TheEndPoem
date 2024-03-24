@@ -1,11 +1,74 @@
-import { component$ } from "@builder.io/qwik";
-import { type DocumentHead, Link } from "@builder.io/qwik-city";
+import { component$, useSignal } from "@builder.io/qwik";
+import { Form, Link, validator$, routeAction$ } from "@builder.io/qwik-city";
+import type DocumentHead from "@builder.io/qwik-city";
 
 import '@fontsource/nothing-you-could-do';
 import '@fontsource/open-sans';
 import '@fontsource/open-sans/700.css';
 
+export const useSendName = routeAction$(
+  async (data, requestEvent) => {
+    // Get body from request
+    const { name } = await requestEvent.parseBody();
+
+
+    // Send 'name' to the Discord webhook
+    const response = await fetch(requestEvent.env.get("WEBHOOK_DISCORD"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: `${name}`,
+      }),
+    });
+
+    // Check if the response indicates an error
+    if (!response.ok) {
+      return {
+        success: false,
+        error: {
+          message: "Discord broke."
+        }
+      }
+    };
+
+    // Return a success message
+    return {
+      success: true,
+      message: "Gotcha!",
+    };
+  },
+  validator$(async (ev: RequestEvent, data) => {
+    // Check if there is a discord webhook
+    if (!ev.env.get("WEBHOOK_DISCORD")) {
+      return {
+        success: false,
+        error: {
+          message: "Webhook, doko?",
+        },
+      };
+    }
+
+    // Check if name is valid
+    if (data.name < 2) {
+      return {
+        success: false,
+        error: {
+          message: "Name is too short",
+        },
+      };
+    }
+    
+    return { success: true };
+  }),
+);
+
 export default component$(() => {
+  const name = useSignal("");
+
+  const action = useSendName();
+
   return (
     <>
       <section class="flex flex-col items-center justify-center gap-5 xl:gap-10">
@@ -17,19 +80,21 @@ export default component$(() => {
             by Julian Gough
           </h2>
         </header>
-        <form class="relative flex w-fit flex-col">
+        <Form class="relative flex w-fit flex-col" action={action}>
           <div class="peer h-12 border-b-2 transition-all duration-300 ease-in-out">
             <input
               id="name"
               type="text"
               name="name"
+              value={name}
+              onInput$={(e) => {name.value = e.target.value}}
               autoComplete="off"
               class="h-full bg-transparent text-base capitalize outline-none"
             />
             <button
               type="submit"
               aria-label="submit"
-              disabled
+              disabled={name.value.length < 2}
               class="h-full dark:fill-[#FBFBFB] fill-[#29292a] px-6 outline-none transition-all duration-300 ease-in-out focus:-translate-y-1 dark:disabled:fill-[#FBFBFB]/50 disabled:fill-[#29292a]/50 disabled:cursor-not-allowed"
             >
               <svg
@@ -41,13 +106,10 @@ export default component$(() => {
               </svg>
             </button>
           </div>
-          <label
-            for="name"
-            class="absolute transition-all duration-200 ease-in-out peer-focus-within:-top-2 peer-active:-top-2"
-          >
+          <label for="name" class="absolute transition-all duration-200 ease-in-out peer-focus-within:-top-2 peer-active:-top-2">
             Name:
           </label>
-        </form>
+        </Form>
         <footer class="w-full absolute bottom-0 p-3 text-center text-sm opacity-60">
           <i>
             This website gather limited user data. To see how it's handled, visit the {" "}
