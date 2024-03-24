@@ -8,9 +8,8 @@ import '@fontsource/open-sans/700.css';
 
 export const useSendName = routeAction$(
   async (data, requestEvent) => {
-    // Get body from request
+    // Get name from request body
     const { name } = await requestEvent.parseBody();
-
 
     // Send 'name' to the Discord webhook
     const response = await fetch(requestEvent.env.get("WEBHOOK_DISCORD"), {
@@ -81,7 +80,7 @@ export default component$(() => {
           </h2>
         </header>
         <Form class="relative flex w-fit flex-col" action={action}>
-          <div class="peer h-12 border-b-2 transition-all duration-300 ease-in-out">
+          <div className={`peer h-12 border-b-2 transition-all duration-300 ease-in-out ${name.value.length < 2 ? 'dark:border-b-[#FBFBFB]/50 border-b-[#29292a]/50' : 'dark:border-b-[#FBFBFB] border-b-[#29292a]'}`}>
             <input
               id="name"
               type="text"
@@ -106,7 +105,7 @@ export default component$(() => {
               </svg>
             </button>
           </div>
-          <label for="name" class="absolute transition-all duration-200 ease-in-out peer-focus-within:-top-2 peer-active:-top-2">
+          <label for="name" className={`absolute transition-all duration-200 ease-in-out peer-focus-within:-top-2 peer-active:-top-2 ${name.value.length != 0 ? '-top-2' : 'top-4'}`}>
             Name:
           </label>
         </Form>
