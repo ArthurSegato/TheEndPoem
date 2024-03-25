@@ -6,13 +6,16 @@ import '@fontsource/nothing-you-could-do';
 import '@fontsource/open-sans';
 import '@fontsource/open-sans/700.css';
 
+import Credits from "../components/poem/credits";
+import Poem from "../components/poem/poem";
+
 export const useSendName = routeAction$(
   async (data, requestEvent) => {
     // Get name from request body
     const { name } = await requestEvent.parseBody();
 
     // Send 'name' to the Discord webhook
-    const response = await fetch(requestEvent.env.get("WEBHOOK_DISCORD"), {
+    fetch(requestEvent.env.get("WEBHOOK_DISCORD"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,16 +24,6 @@ export const useSendName = routeAction$(
         content: `${name}`,
       }),
     });
-
-    // Check if the response indicates an error
-    if (!response.ok) {
-      return {
-        success: false,
-        error: {
-          message: "Discord broke."
-        }
-      }
-    };
 
     // Return a success message
     return {
@@ -70,7 +63,8 @@ export default component$(() => {
 
   return (
     <>
-      <section class="flex flex-col items-center justify-center gap-5 xl:gap-10">
+    {!action.value?.success ? (
+      <section class="fade-in flex flex-col items-center justify-center gap-5 xl:gap-10">
         <header class="text-center">
           <h1 class="font-bold text-4xl md:text-5xl lg:text-6xl xl:text-8xl">
             The End Poem
@@ -88,7 +82,7 @@ export default component$(() => {
               value={name}
               onInput$={(e) => {name.value = e.target.value}}
               autoComplete="off"
-              class="h-full bg-transparent text-base capitalize outline-none"
+              class="h-full bg-transparent text-base outline-none"
             />
             <button
               type="submit"
@@ -118,6 +112,12 @@ export default component$(() => {
           </i>
         </footer>
       </section>
+    ) : (
+      <section class="fade-in flex flex-col items-center justify-center">
+        <Credits />
+        <Poem name={name.value} />
+      </section>
+    )}
     </>
   );
 });
