@@ -1,19 +1,23 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { Link} from "@builder.io/qwik-city";
 
 export default component$(() => {
   const isDialogOpen = useSignal(false);
+
+
+  useVisibleTask$(() => {
+    const dialog = document.getElementById("modal");
+  });
   return (
     <>
       <header class="fixed top-0 flex w-full h-16 px-8 items-center z-20">
-        <button onClick$={() => { isDialogOpen.value = !isDialogOpen.value}} className={`w-8 h-8 flex flex-col items-start content-center justify-evenly ease-in-out transition-all duration-300 ${isDialogOpen.value && "-rotate-90"}`}>
+        <button onClick$={() => { isDialogOpen.value = !isDialogOpen.value; dialog.value.showModal()}} className={`w-8 h-8 flex flex-col items-start content-center justify-evenly ease-in-out transition-all duration-300 ${isDialogOpen.value && "-rotate-90"}`}>
           <div className={`bg-[#FBFBFB] rounded transition-all duration-300 ${!isDialogOpen.value ? "w-[57%] h-[16%]": "w-[20%] h-[20%] ml-3"}`}></div>
           <div className={`bg-[#FBFBFB] rounded transition-all duration-300 ${!isDialogOpen.value ? "w-[39%] h-[16%]": "w-[20%] h-[20%] ml-3"}`}></div>
           <div className={`bg-[#FBFBFB] rounded transition-all duration-300 ${!isDialogOpen.value ? "w-[78%] h-[16%]": "w-[20%] h-[20%] ml-3"}`}></div>
         </button>
       </header>
-      {isDialogOpen.value && (
-        <div class="fixed top-0 leading-6 gap-4 flex flex-col px-20 py-32 sm:px-48 lg:px-80 md:px-64 2xl:px-[36rem] md:py-44 2xl:py-56">
+        <dialog id="modal" class="leading-6 gap-4 flex flex-col px-20 py-32 sm:px-48 lg:px-80 md:px-64 2xl:px-[36rem] md:py-44 2xl:py-56">
           <h4 class="text-2xl md:text-3xl 2xl:text-4xl font-bold">Credits</h4>
           <p class="text-sm md:text-base 2xl:text-lg">
             The <strong>“End Poem”</strong> has been released into the {" "}
@@ -86,8 +90,7 @@ export default component$(() => {
                   Menu button
                 </Link>.
               </p>
-        </div>
-      )}
+        </dialog>
     </>
   );
 });
